@@ -7,10 +7,10 @@ from scipy.integrate import cumulative_trapezoid
 Q, Rb, Lam = 1e3, 1e4, 1e-52
 
 # Loop Constants
-Xi, Xf, Xspc = 0.01, 0.98, 30
-ni, nf, nspc = 1.01, 5, 20
-li, lf, lspc = 0.01, 5, 20
-gi, gf, gspc = 0.001, 5, 20
+Xi, Xf, Xspc = 0.01, 0.98, 50
+ni, nf, nspc = 1.01, 5, 30
+li, lf, lspc = 0.01, 5, 30
+gi, gf, gspc = 0.001, 5, 30
 
 # Eq. 33 in paper
 def phiprime(n, l, g, rho0, p0):
