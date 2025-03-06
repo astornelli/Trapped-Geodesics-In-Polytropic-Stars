@@ -92,6 +92,7 @@ for jdx, eE in enumerate(E_vals):
                     with open("CMSSE=10.txt", "a") as f:  # Open in append mode to keep adding results
                         if len(crossing) < 1:
                             f.write(f"{n} {l} {g} {rho0}\n")  # Write values separated by spaces
+        
         # Scatter plot
         SCax.scatter(ns, ls, gs, color='lightseagreen', alpha = 0.8, marker="o", rasterized=True)
         SCax.scatter(nus, lus, gus, color='blue', alpha = 0.8, marker="o", rasterized=True)  
