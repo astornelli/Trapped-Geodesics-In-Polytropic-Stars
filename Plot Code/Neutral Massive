@@ -12,7 +12,7 @@ ni, nf, nspc = 1.01, 5, 30
 li, lf, lspc = 0.01, 5, 30
 gi, gf, gspc = 0.001, 5, 30
 
-# Eq. 33 in paper
+# Eq. 43 in paper
 def phiprime(n, l, g, rho0, p0):
     fact1 = 4*np.pi*rho0*Rb
     fact12 = (l+1)/(l+3)
