@@ -47,8 +47,8 @@ fig = plt.figure(figsize=(12, 8))
 ax = fig.add_subplot(111, projection='3d')
 
 # Scatter plot
-scatter_s = ax.scatter([], [], [], marker="s", color='lightseagreen', alpha=1, rasterized=True)
-scatter_us = ax.scatter([], [], [], marker="s", color='blue', alpha=1, rasterized=True)
+scatter_s = ax.scatter([], [], [], marker="s", color='mediumpurple', alpha=1, rasterized=True)
+scatter_us = ax.scatter([], [], [], marker="s", color='magenta', alpha=1, rasterized=True)
 
 # Axes labels and limits
 ax.set_xlim(0.51, 5.51)
