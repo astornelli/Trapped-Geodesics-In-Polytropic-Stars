@@ -162,14 +162,14 @@ for jdx, eE in enumerate(E_vals):
 # Scatter plot: Sets labels for rows
 for jdx, eE in enumerate(E_vals):
     SCfig.text(0.05, 0.788 - jdx * 0.305, r"$e/\mathcal{E}=$"+r"${:.2f}$".format(eE), fontsize=20, ha='center', va='center', rotation='vertical', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
-    LHSfig.text(0.05, 0.83 - jdx * 0.305, r"$e/\mathcal{E}=$"+r"${:.2f}$".format(eE), fontsize=20, ha='center', va='center', rotation='vertical', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
+    LHSfig.text(0.05, 0.815 - jdx * 0.29, r"$e/\mathcal{E}=$"+r"${:.2f}$".format(eE), fontsize=20, ha='center', va='center', rotation='vertical', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
     
 # Scatter plot: Sets labels for columns
 for idx, rho0 in enumerate(rho_vals):
     exponent = int(np.floor(np.log10(rho0)))  # Get the exponent in scientific notation
     coeff = rho0 / (10 ** exponent)     # Get the mantissa (significant figures)
-    SCfig.text(0.158 + idx * 0.321, 0.05, rf'$\rho_0 = {coeff:.1f} \times 10^{{{exponent}}}$', fontsize=20, ha='center', va='center', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
-    LHSfig.text(0.255 + idx * 0.291, 0.05, rf'$\rho_0 = {coeff:.1f} \times 10^{{{exponent}}}$', fontsize=20, ha='center', va='center', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
+    SCfig.text(0.165 + idx * 0.321, 0.94, rf'$\rho_0 = {coeff:.1f} \times 10^{{{exponent}}}$', fontsize=20, ha='center', va='center', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
+    LHSfig.text(0.255 + idx * 0.291, 0.97, rf'$\rho_0 = {coeff:.1f} \times 10^{{{exponent}}}$', fontsize=20, ha='center', va='center', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
 
 # Saves scatter plot
 SCfig.savefig("-ScCHMVE=10.pdf", bbox_inches=None)
