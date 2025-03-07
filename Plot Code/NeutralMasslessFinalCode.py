@@ -72,12 +72,12 @@ for idx, rho0 in enumerate(rho_vals):
                     ns.append(n)
                     ls.append(l)
                     gs.append(g)
-                with open("NML.txt", "a") as f:  # Open in append mode to keep adding results
-                    f.write(f"{n} {l} {g} {rho0}\n")  # Write values separated by spaces
+                #with open("NML.txt", "a") as f:  # Open in append mode to keep adding results
+                    #f.write(f"{n} {l} {g} {rho0}\n")  # Write values separated by spaces
 
 # Scatter plot
-    SCax.scatter(ns, ls, gs, color='orange', alpha = 0.8, marker="o", rasterized=True)
-    SCax.scatter(nus, lus, gus, color='lawngreen', alpha = 0.8, marker="o", rasterized=True)  
+    SCax.scatter(ns, ls, gs, color='orange', alpha = 1, marker="s", rasterized=True)
+    SCax.scatter(nus, lus, gus, color='lawngreen', alpha = 1, marker="s", rasterized=True)  
     
     # Scatter plot parameters
     SCax.set_xlim(0.51, 5.51)
@@ -117,22 +117,16 @@ for idx, rho0 in enumerate(rho_vals):
     LHSax.set_aspect('auto')
     LHSax.tick_params(which='both', direction='in', top=True, bottom=True, left=True, right=True)
 
-
-# Scatter and LHS plot: Sets labels for rows
-for jdx, p0 in enumerate(p_ratio_vals):
-    SCfig.text(0.05, 0.55 - jdx,  r"$p_0/\rho_0$ = "+"{:.2f}".format(p0), fontsize=18, ha='center', va='center', rotation='vertical', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
-    LHSfig.text(0.05, 0.55 - jdx,  r"$p_0/\rho_0$ = "+"{:.2f}".format(p0), fontsize=18, ha='center', va='center', rotation='vertical', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
-
 # Scatter and LHS plot: Sets labels for columns
 for idx, rho0 in enumerate(rho_vals):
     exponent = int(np.floor(np.log10(rho0)))  # Get the exponent in scientific notation
     coeff = rho0 / (10 ** exponent)     # Get the mantissa
-    SCfig.text(0.18 + idx * 0.32, 0.05, rf'$\rho_0 = {coeff:.1f} \times 10^{{{exponent}}}$', fontsize=18, ha='center', va='center', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
-    LHSfig.text(0.251 + idx * 0.29, 0.04, rf'$\rho_0 = {coeff:.1f} \times 10^{{{exponent}}}$', fontsize=18, ha='center', va='center', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
+    SCfig.text(0.165 + idx * 0.321, 0.94, rf'$\rho_0 = {coeff:.1f} \times 10^{{{exponent}}}$', fontsize=18, ha='center', va='center', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
+    LHSfig.text(0.255 + idx * 0.291, 0.99, rf'$\rho_0 = {coeff:.1f} \times 10^{{{exponent}}}$', fontsize=18, ha='center', va='center', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
 
 # Saves scatter plot
 SCfig.savefig("ScNMLE=10.pdf", bbox_inches=None)
 # Saves LHS plot
 LHSfig.tight_layout(rect=[0.06, 0.06, 1, 0.96])
-LHSfig.savefig("LHSNMLE=10.pdf", bbox_inches='tight')
+LHSfig.savefig("LHSNML0.25.pdf", bbox_inches='tight')
 plt.show()
