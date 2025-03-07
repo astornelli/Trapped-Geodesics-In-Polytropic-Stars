@@ -1,5 +1,6 @@
 # Neutral Massive
 import numpy as np
+import matplotlib
 from matplotlib import pyplot as plt
 from scipy.integrate import cumulative_trapezoid
 
@@ -43,6 +44,23 @@ SCaxes = SCaxes.flatten()
 # Create 1x3 LHS subplot
 LHSfig, LHSaxes = plt.subplots(1, 3, figsize=(15, 5), sharex=True, sharey=True)
 LHSaxes = LHSaxes.flatten()
+
+#Plot Params
+plt.rcParams['font.family'] = 'serif' #'STIXGeneral' #'serif'
+matplotlib.rcParams['font.size'] = '16'
+matplotlib.rcParams['ps.fonttype'] = 42 #note: fontype 42 compatible with MNRAS style file when saving figs
+matplotlib.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['axes.labelsize'] = 12
+plt.rcParams['axes.linewidth'] = 1.
+plt.rcParams['xtick.major.size'] = 6
+plt.rcParams['xtick.minor.size'] = 3
+plt.rcParams['ytick.major.size'] = 6
+plt.rcParams['ytick.minor.size'] = 3
+plt.rcParams['xtick.labelsize'] = 12
+plt.rcParams['ytick.labelsize'] = 12
+plt.rcParams['legend.numpoints'] = 1  # uses 1 symbol instead of 2
+plt.rcParams['legend.frameon'] = False
+plt.rcParams['legend.handletextpad'] = 0.3
 
 # Loop through rho and pres combinations
 for idx, rho0 in enumerate(rho_vals):
