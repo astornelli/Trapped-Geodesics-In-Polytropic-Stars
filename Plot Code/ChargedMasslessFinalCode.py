@@ -1,5 +1,6 @@
-# Charged Massless 
+#Charged Massless 
 import numpy as np
+import matplotlib
 from matplotlib import pyplot as plt
 from scipy.integrate import cumulative_trapezoid
 
@@ -33,7 +34,7 @@ def Fprime(n, l, g, rho0, p0):
 
 # Grid of rho and p values
 rho_vals = np.array([8.1e-10, 1.1e-9, 2.1e-9])  # 4 values for rho
-E_vals = np.array([-10])
+E_vals = np.array([10])
 p_ratio = 0.25
 
 # Define X and ranges for the nested loops
@@ -50,6 +51,23 @@ SCaxes = SCaxes.flatten()
 # Create 1x3 LHS subplot
 LHSfig, LHSaxes = plt.subplots(1, 3, figsize=(15, 5), sharex=True, sharey=True)
 LHSaxes = LHSaxes.flatten()
+
+#Plot Params
+plt.rcParams['font.family'] = 'serif' #'STIXGeneral' #'serif'
+matplotlib.rcParams['font.size'] = '16'
+matplotlib.rcParams['ps.fonttype'] = 42 #note: fontype 42 compatible with MNRAS style file when saving figs
+matplotlib.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['axes.labelsize'] = 12
+plt.rcParams['axes.linewidth'] = 1.
+plt.rcParams['xtick.major.size'] = 6
+plt.rcParams['xtick.minor.size'] = 3
+plt.rcParams['ytick.major.size'] = 6
+plt.rcParams['ytick.minor.size'] = 3
+plt.rcParams['xtick.labelsize'] = 12
+plt.rcParams['ytick.labelsize'] = 12
+plt.rcParams['legend.numpoints'] = 1  # uses 1 symbol instead of 2
+plt.rcParams['legend.frameon'] = False
+plt.rcParams['legend.handletextpad'] = 0.3
 
 # Loop through rho and pres combinations
 for jdx, eE in enumerate(E_vals):
@@ -147,8 +165,8 @@ for idx, rho0 in enumerate(rho_vals):
     LHSfig.text(0.255 + idx * 0.291, 0.97, rf'$\rho_0 = {coeff:.1f} \times 10^{{{exponent}}}$', fontsize=18, ha='center', va='center', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
 
 # Saves scatter plot
-SCfig.savefig("ScCHMSE=-10.pdf", bbox_inches=None)
+SCfig.savefig("ScCHMSE=10.pdf", bbox_inches=None)
 # Saves LHS plot
 LHSfig.tight_layout(rect=[0.06, 0.06, 1, 0.96])
-LHSfig.savefig("LHSCHMSE=-10.pdf", bbox_inches='tight')
+LHSfig.savefig("LHSCHMSE=10.pdf", bbox_inches='tight')
 plt.show()
