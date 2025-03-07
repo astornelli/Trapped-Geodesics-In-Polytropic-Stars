@@ -105,8 +105,8 @@ for jdx, eE in enumerate(E_vals):
                             f.write(f"{n} {l} {g} {rho0}\n")  # Write values separated by spaces
         
         # Scatter plot
-        SCax.scatter(ns, ls, gs, color='mediumpurple', alpha = 0.8, marker="s", rasterized=True)
-        SCax.scatter(nus, lus, gus, color='magenta', alpha = 0.8, marker="s", rasterized=True)
+        SCax.scatter(ns, ls, gs, color='mediumpurple', alpha = 1, marker="s", rasterized=True)
+        SCax.scatter(nus, lus, gus, color='magenta', alpha = 1, marker="s", rasterized=True)
         
         # Scatter plot parameters
         SCax.set_xlim(0.51, 5.51)
