@@ -1,5 +1,6 @@
 # Charged Massive Plots
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 from scipy.integrate import cumulative_trapezoid
 
@@ -33,7 +34,7 @@ def Fprime(n, l, g, rho0, p0):
 
 # Grid of rho and p values
 rho_vals = np.array([8.1e-10, 1.5e-9, 3.2e-9])
-E_vals = np.array([-1, -10, -100])
+E_vals = np.array([1, 10, 100])
 p_ratio = 0.25
 
 # Define X and ranges for the nested loops
@@ -50,6 +51,23 @@ SCaxes = SCaxes.flatten()
 # Create 3x3 LHS subplot
 LHSfig, LHSaxes = plt.subplots(3, 3, figsize=(20, 20), sharex=True, sharey=True)
 LHSaxes = LHSaxes.flatten()
+
+#Plot Params
+plt.rcParams['font.family'] = 'serif' #'STIXGeneral' #'serif'
+matplotlib.rcParams['font.size'] = '16'
+matplotlib.rcParams['ps.fonttype'] = 42 #note: fontype 42 compatible with MNRAS style file when saving figs
+matplotlib.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['axes.labelsize'] = 12
+plt.rcParams['axes.linewidth'] = 1.
+plt.rcParams['xtick.major.size'] = 6
+plt.rcParams['xtick.minor.size'] = 3
+plt.rcParams['ytick.major.size'] = 6
+plt.rcParams['ytick.minor.size'] = 3
+plt.rcParams['xtick.labelsize'] = 12
+plt.rcParams['ytick.labelsize'] = 12
+plt.rcParams['legend.numpoints'] = 1  # uses 1 symbol instead of 2
+plt.rcParams['legend.frameon'] = False
+plt.rcParams['legend.handletextpad'] = 0.3
 
 # Loop through rho and pres combinations
 for jdx, eE in enumerate(E_vals):
@@ -100,9 +118,9 @@ for jdx, eE in enumerate(E_vals):
                         ls.append(l)
                         gs.append(g)
                     # Makes a .txt of the scatter plot points
-                    with open("CMSE=10.txt", "a") as f:  # Open in append mode to keep adding results
-                        if len(crossing) < 1:
-                            f.write(f"{n} {l} {g} {rho0}\n")  # Write values separated by spaces
+                    #with open("CMSE=10.txt", "a") as f:  # Open in append mode to keep adding results
+                        #if len(crossing) < 1:
+                            #f.write(f"{n} {l} {g} {rho0}\n")  # Write values separated by spaces
         
         # Scatter plot
         SCax.scatter(ns, ls, gs, color='mediumpurple', alpha = 1, marker="s", rasterized=True)
@@ -172,8 +190,8 @@ for idx, rho0 in enumerate(rho_vals):
     LHSfig.text(0.255 + idx * 0.291, 0.97, rf'$\rho_0 = {coeff:.1f} \times 10^{{{exponent}}}$', fontsize=20, ha='center', va='center', bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
 
 # Saves scatter plot
-SCfig.savefig("-ScCHMVE=10.pdf", bbox_inches=None)
+SCfig.savefig("ScCHMVE=10.pdf", bbox_inches=None)
 # Saves LHS plot
 LHSfig.tight_layout(rect=[0.06, 0.06, 1, 0.96])
-LHSfig.savefig("-LHSCHMVE=10.pdf", bbox_inches='tight')
+LHSfig.savefig("LHSCHMVE=10.pdf", bbox_inches='tight')
 plt.show()
