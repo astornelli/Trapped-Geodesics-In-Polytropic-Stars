@@ -1,5 +1,6 @@
 # Neutral Massless Rho0 Animation
 import numpy as np
+import matplotlib
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation, FFMpegWriter
 
@@ -34,11 +35,10 @@ rho0_vals = np.linspace(rho0_min, rho0_max, 100)
 # Set up the figure and axis
 fig = plt.figure(figsize=(12, 8))
 ax = fig.add_subplot(111, projection='3d')
-fig.suptitle(r'$n, l, \Gamma$ Parameter Space for Neutral Massive Particles', y=0.95, fontsize=16)
 
 # Initialize scatter plots
-scatter_s = ax.scatter([], [], [], marker="o", color='orange', alpha=0.8, rasterized=True)
-scatter_us = ax.scatter([], [], [], marker="o", color='lawngreen', alpha=0.8, rasterized=True)
+scatter_s = ax.scatter([], [], [], marker="s", color='orange', alpha=1, rasterized=True)
+scatter_us = ax.scatter([], [], [], marker="s", color='lawngreen', alpha=1, rasterized=True)
 
 # Axes labels and limits
 ax.set_xlim(0.51, 5.51)
@@ -49,10 +49,27 @@ ax.set_ylabel("$l$")
 ax.zaxis.set_rotate_label(False)
 ax.set_zlabel(r'$\Gamma$', rotation=0)
 
+#Plot Params
+plt.rcParams['font.family'] = 'serif' #'STIXGeneral' #'serif'
+matplotlib.rcParams['font.size'] = '16'
+matplotlib.rcParams['ps.fonttype'] = 42 #note: fontype 42 compatible with MNRAS style file when saving figs
+matplotlib.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['axes.labelsize'] = 12
+plt.rcParams['axes.linewidth'] = 1.
+plt.rcParams['xtick.major.size'] = 6
+plt.rcParams['xtick.minor.size'] = 3
+plt.rcParams['ytick.major.size'] = 6
+plt.rcParams['ytick.minor.size'] = 3
+plt.rcParams['xtick.labelsize'] = 12
+plt.rcParams['ytick.labelsize'] = 12
+plt.rcParams['legend.numpoints'] = 1  # uses 1 symbol instead of 2
+plt.rcParams['legend.frameon'] = False
+plt.rcParams['legend.handletextpad'] = 0.3
+
 def update(frame):
     # Current rho value
     rho0 = rho0_vals[frame]
-    p0 = 1 * rho0
+    p0 = 0.1 * rho0
 
     ns, ls, gs = [], [], []
     nus, lus, gus = [], [], []
@@ -98,7 +115,7 @@ ani = FuncAnimation(fig, update, frames=num_frames, interval=1000, blit=False)
 
 # Save the animation as a video
 writer = FFMpegWriter(fps=10, metadata=dict(artist='Me'), bitrate=1800)
-ani.save("NeutralMassless1.mp4", writer=writer)
+ani.save("NeutralMassless0.1.mp4", writer=writer)
 
 # Display animation
 plt.show()
