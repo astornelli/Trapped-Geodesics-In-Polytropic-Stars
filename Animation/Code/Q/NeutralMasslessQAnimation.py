@@ -8,10 +8,10 @@ from matplotlib.animation import FuncAnimation, FFMpegWriter
 Rb, rho0 = 1e4, 1e-9
 p0 = rho0*0.25
 
-Xi, Xf, Xspc = 0.01, 0.98, 10
-ni, nf, nspc = 1.01, 5, 10
-li, lf, lspc = 0.01, 5, 10
-gi, gf, gspc = 0.001, 5, 10
+Xi, Xf, Xspc = 0.01, 0.98, 50
+ni, nf, nspc = 1.01, 5, 30
+li, lf, lspc = 0.01, 5, 30
+gi, gf, gspc = 0.001, 5, 30
 
 # Eq. 39 in paper
 def func(n, l, g, Q):
