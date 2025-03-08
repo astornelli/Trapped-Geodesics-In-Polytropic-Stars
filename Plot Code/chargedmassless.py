@@ -75,6 +75,9 @@ for jdx, eE in enumerate(E_vals):
         SCax = SCaxes[idx]  # Access corresponding subplot
         LHSax = LHSaxes[idx]  # Access corresponding subplot
         p0 = p_ratio * rho0  # Calculate pres
+
+        if idx == 0:  # Only the first column gets the y-axis label
+            LHSax.set_ylabel(r'f$(n, l, \Gamma, \chi)$', fontsize=18)
         
         ns, ls, gs = [], [], []
         nus, lus, gus = [], [], []
