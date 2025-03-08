@@ -126,7 +126,6 @@ for idx, rho0 in enumerate(rho_vals):
         y = phiprime(nv, lv, gv, rho0, p0)
         y_integral = cumulative_trapezoid(y, X, initial=0)
         y_combined = np.exp(-2 * y_integral) * (1 - X * Rb * y)
-        y_deriv = np.gradient(y_combined, X)
         LHSax.plot(X, y_combined, lw=2, ls='-')
     
     # Unstable LHS
@@ -134,7 +133,6 @@ for idx, rho0 in enumerate(rho_vals):
         y = phiprime(nv, lv, gv, rho0, p0)
         y_integral = cumulative_trapezoid(y, X, initial=0)
         y_combined = np.exp(-2 * y_integral) * (1 - X * Rb * y)
-        y_deriv = np.gradient(y_combined, X)
         LHSax.plot(X, y_combined, lw=2, ls=':')
 
     # LHS plot parameters
