@@ -1,4 +1,4 @@
-#Neutral Massless Rb Animation
+# Neutral Massless Rho0 Animation
 import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
@@ -7,13 +7,14 @@ from matplotlib.animation import FuncAnimation, FFMpegWriter
 # Define global constants
 Q, rho0 = 1e3, 1e-9
 p0 = rho0*0.25
+
 Xi, Xf, Xspc = 0.01, 0.98, 50
 ni, nf, nspc = 1.01, 5, 30
 li, lf, lspc = 0.01, 5, 30
 gi, gf, gspc = 0.001, 5, 30
 
 # Eq. 39 in paper
-def funcRb(n, l, g, Rb):
+def func(n, l, g, Rb):
     fact1 = 4 * np.pi * rho0 * Rb**2
     fact12 = (l - 1) / (l + 3)
     fact13 = p0 / rho0
@@ -30,7 +31,7 @@ lvals = np.linspace(li, lf, num=lspc)
 gvals = np.linspace(gi, gf, num=gspc)
 
 # Rb Range
-Rb_min, Rb_max = 6000, 12000
+Rb_min, Rb_max = 6000, 15000
 Rb_vals = np.linspace(Rb_min, Rb_max, 100)
 
 # Set up the figure and axis
@@ -68,7 +69,7 @@ plt.rcParams['legend.frameon'] = False
 plt.rcParams['legend.handletextpad'] = 0.3
 
 def update(frame):
-    # Current Rb value
+    # Current rho value
     Rb = Rb_vals[frame]
 
     ns, ls, gs = [], [], []
@@ -81,7 +82,7 @@ def update(frame):
                     continue
                 if p0 / rho0 > 1 / g:
                     continue
-                y = funcRb(n, l, g, Rb)
+                y = func(n, l, g, Rb)
                 if (y[0] < 1) and (np.max(y) >= 1):
                     if y[-1] < 1:
                         nus.append(n)
@@ -101,9 +102,11 @@ def update(frame):
     scatter_us._offsets3d = (nus, lus, gus)
     fmRb = f"{Rb:.1e}"
     digit, exponent = fmRb.split('e')
-    ax.set_title(rf"$R_b = {float(digit):.2f} \times 10^{{{int(exponent)}}}$", y=1.15)
+    fmrho = f"{rho0:.1e}"
+    digit1, exponent1 = fmrho.split('e')
+    ax.set_title(rf"$r_b = {float(digit):.2f} \times 10^{{{int(exponent)}}}$", y=1.15)
     plt.suptitle(
-        rf"$(p_0/\rho_0 = {p0 / rho0:.2f}, Q = 10^3)$",
+        rf"$(\rho_0 = {float(digit1):.2f} \times 10^{{{int(exponent1)}}}, p_0/\rho_0 = {p0 / rho0:.2f}, Q = 10^3)$",
         fontsize=12,
         y=0.9,
     )
@@ -115,7 +118,7 @@ ani = FuncAnimation(fig, update, frames=num_frames, interval=1000, blit=False)
 
 # Save the animation as a video
 writer = FFMpegWriter(fps=10, metadata=dict(artist='Me'), bitrate=1800)
-ani.save("NeutralMassless_Rb.mp4", writer=writer)
+ani.save("RbNeutralMassless.mp4", writer=writer)
 
 # Display animation
 plt.show()

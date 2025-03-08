@@ -13,7 +13,7 @@ p0 = rho0*0.25
 Xi, Xf, Xspc = 0.01, 0.98, 50
 ni, nf, nspc = 1.01, 5, 30
 li, lf, lspc = 0.01, 5, 30
-gi, gf, gspc = 0.001, 5, 30
+gi, gf, gspc = 0.001, 5, 30 
 
 # Eq. 43 in paper
 def phiprime(n, l, g, Rb):
@@ -40,7 +40,7 @@ lvals = np.linspace(li, lf, num=lspc)
 gvals = np.linspace(gi, gf, num=gspc)
 
 # Rb Range
-Rb_min, Rb_max = 6000, 12000
+Rb_min, Rb_max = 6000, 15000
 Rb_vals = np.linspace(Rb_min, Rb_max, 100)
 
 # Set up the figure and axis
@@ -83,7 +83,7 @@ def update(frame):
 
     ns, ls, gs = [], [], []
     nus, lus, gus = [], [], []
-    eE = 1/100
+    eE = 100
     E = 10
 
     for n in nvals:
@@ -91,8 +91,8 @@ def update(frame):
             for g in gvals:
                 if p0 / rho0 > 1 / g:
                     continue
-                phip = phiprime(n, l, g, rho0, p0)
-                Fpri = Fprime(n, l, g, rho0, p0)
+                phip = phiprime(n, l, g, Rb)
+                Fpri = Fprime(n, l, g, Rb)
                 if len(np.where(phip[1]<=0)[0])!=0:
                     continue
                 F = cumulative_trapezoid(Fpri*Rb, X, initial=0)
@@ -122,9 +122,11 @@ def update(frame):
     scatter_us._offsets3d = (nus, lus, gus)
     fmRb = f"{Rb:.1e}"
     digit, exponent = fmRb.split('e')
-    ax.set_title(rf"$R_b = {float(digit):.2f} \times 10^{{{int(exponent)}}}$", y=1.15)
+    fmrho = f"{rho0:.1e}"
+    digit1, exponent1 = fmrho.split('e')
+    ax.set_title(rf"$r_b = {float(digit):.2f} \times 10^{{{int(exponent)}}}$", y=1.15)
     plt.suptitle(
-        rf"$(\rho_0 = {rho0:.1e}, p_0/\rho_0 = {p0 / rho0:.2f}, Q = 10^3, e/\mathcal{{E}} = 10), E = 10$",
+        rf"$(\rho_0 = {float(digit1):.2f} \times 10^{{{int(exponent1)}}}, p_0/\rho_0 = {p0 / rho0:.2f}, Q = 10^3, e/\mathcal{{E}} = 100, \mathcal{{E}} = 10)$",
         fontsize=12,
         y=0.9,
     )
@@ -136,7 +138,7 @@ ani = FuncAnimation(fig, update, frames=num_frames, interval=1000, blit=False)
 
 # Save the animation as a video
 writer = FFMpegWriter(fps=10, metadata=dict(artist='Me'), bitrate=1800)
-ani.save("RbChargedMassive_E=2.mp4", writer=writer)
+ani.save("RbChargedMassive.mp4", writer=writer)
 
 # Display animation
 plt.show()

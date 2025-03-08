@@ -1,5 +1,6 @@
 # Neutral Massive Animation Code for Rb
 import numpy as np
+import matplotlib
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation, FFMpegWriter
 from scipy.integrate import cumulative_trapezoid
@@ -40,8 +41,8 @@ fig = plt.figure(figsize=(12, 8))
 ax = fig.add_subplot(111, projection='3d')
 
 # Scatter plot
-scatter_s = ax.scatter([], [], [], marker="o", color='lightcoral', alpha=0.8, rasterized=True)
-scatter_us = ax.scatter([], [], [], marker="o", color='red', alpha=0.8, rasterized=True)
+scatter_s = ax.scatter([], [], [], marker="s", color='lightcoral', alpha=1, rasterized=True)
+scatter_us = ax.scatter([], [], [], marker="s", color='red', alpha=1, rasterized=True)
 
 # Axes labels and limits
 ax.set_xlim(0.51, 5.51)
@@ -52,13 +53,30 @@ ax.set_ylabel("$l$")
 ax.zaxis.set_rotate_label(False)
 ax.set_zlabel(r'$\Gamma$', rotation=0)
 
+#Plot Params
+plt.rcParams['font.family'] = 'serif' #'STIXGeneral' #'serif'
+matplotlib.rcParams['font.size'] = '16'
+matplotlib.rcParams['ps.fonttype'] = 42 #note: fontype 42 compatible with MNRAS style file when saving figs
+matplotlib.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['axes.labelsize'] = 12
+plt.rcParams['axes.linewidth'] = 1.
+plt.rcParams['xtick.major.size'] = 6
+plt.rcParams['xtick.minor.size'] = 3
+plt.rcParams['ytick.major.size'] = 6
+plt.rcParams['ytick.minor.size'] = 3
+plt.rcParams['xtick.labelsize'] = 12
+plt.rcParams['ytick.labelsize'] = 12
+plt.rcParams['legend.numpoints'] = 1  # uses 1 symbol instead of 2
+plt.rcParams['legend.frameon'] = False
+plt.rcParams['legend.handletextpad'] = 0.3
+
 def update(frame):
     # Current rho value
     Rb = Rb_vals[frame]
 
     ns, ls, gs = [], [], []
     nus, lus, gus = [], [], []
-    one_over_esq = 1/4
+    one_over_esq = 1/100
 
     for n in nvals:
         for l in lvals:
@@ -87,9 +105,11 @@ def update(frame):
     scatter_us._offsets3d = (nus, lus, gus)
     fmRb = f"{Rb:.1e}"
     digit, exponent = fmRb.split('e')
-    ax.set_title(rf"$R_b = {float(digit):.2f} \times 10^{{{int(exponent)}}}$", y=1.15)
+    fmrho = f"{rho0:.1e}"
+    digit1, exponent1 = fmrho.split('e')
+    ax.set_title(rf"$r_b = {float(digit):.2f} \times 10^{{{int(exponent)}}}$", y=1.15)
     plt.suptitle(
-        rf"$(\rho_0 = {rho0:.1e}, p_0/\rho_0 = {p0 / rho0:.2f}, Q = 10^3, 1/\mathcal{{E}}^2 = 1/4)$",
+        rf"$(\rho_0 = {float(digit1):.2f} \times 10^{{{int(exponent1)}}}, p_0/\rho_0 = {p0 / rho0:.2f}, Q = 10^3, 1/\mathcal{{E}}^2 = 1/25)$",
         fontsize=12,
         y=0.9,
     )
@@ -101,7 +121,7 @@ ani = FuncAnimation(fig, update, frames=num_frames, interval=1000, blit=False)
 
 # Save the animation as a video
 writer = FFMpegWriter(fps=10, metadata=dict(artist='Me'), bitrate=1800)
-ani.save("RbNeutralMassive_E=2.mp4", writer=writer)
+ani.save("RbNeutralMassive.mp4", writer=writer)
 
 # Display animation
 plt.show()
