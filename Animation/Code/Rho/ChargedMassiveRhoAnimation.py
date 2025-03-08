@@ -39,7 +39,7 @@ lvals = np.linspace(li, lf, num=lspc)
 gvals = np.linspace(gi, gf, num=gspc)
 
 # Rho0 Range
-rho0_min, rho0_max = 1e-10, 2e-9
+rho0_min, rho0_max = 1e-10, 1e-8
 rho0_vals = np.linspace((rho0_min), (rho0_max), 100)
 
 # Set up the figure and axis
@@ -83,7 +83,7 @@ def update(frame):
 
     ns, ls, gs = [], [], []
     nus, lus, gus = [], [], []
-    eE = 1/100
+    eE = 100
     E = 10
 
     for n in nvals:
@@ -120,9 +120,11 @@ def update(frame):
     # Update scatter plot data
     scatter_s._offsets3d = (ns, ls, gs)
     scatter_us._offsets3d = (nus, lus, gus)
-    ax.set_title(r"$\rho_0 = " + f"{rho0:.1e}$", fontsize=14)
+    fmrho = f"{rho0:.1e}"
+    digit, exponent = fmrho.split('e')
+    ax.set_title(rf"$\rho_0 = {float(digit):.2f} \times 10^{{{int(exponent)}}}$", fontsize=14)
     plt.suptitle(
-        rf"$(p_0/\rho_0 = {p0 / rho0:.2f}, Q = 10^3, R_b = 10^4,  1/\mathcal{{E}}^2 = 1/100)$",
+        rf"$(p_0/\rho_0 = {p0 / rho0:.2f}, Q = 10^3, r_b = 10^4,  e/\mathcal{{E}} = 100, \mathcal{{E}} = 10)$",
         fontsize=12,
         y=0.87,
     )
@@ -134,7 +136,7 @@ ani = FuncAnimation(fig, update, frames=num_frames, interval=1000, blit=False)
 
 # Save the animation as a video
 writer = FFMpegWriter(fps=10, metadata=dict(artist='Me'), bitrate=1800)
-ani.save("0.25ChargeMassive_E=10.mp4", writer=writer)
+ani.save("Charged-Massive-rho.mp4", writer=writer)
 
 # Display animation
 plt.show()

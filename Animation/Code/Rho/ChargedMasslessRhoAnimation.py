@@ -1,4 +1,4 @@
-#Charged Massive Animation Code for Rho
+#Charged Massless Animation Code for Rho
 import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
@@ -39,7 +39,7 @@ lvals = np.linspace(li, lf, num=lspc)
 gvals = np.linspace(gi, gf, num=gspc)
 
 # Rho0 Range
-rho0_min, rho0_max = 1e-10, 2e-9
+rho0_min, rho0_max = 1e-10, 1e-8
 rho0_vals = np.linspace((rho0_min), (rho0_max), 100)
 
 # Set up the figure and axis
@@ -118,7 +118,7 @@ def update(frame):
     scatter_us._offsets3d = (nus, lus, gus)
     ax.set_title(r"$\rho_0 = " + f"{rho0:.1e}$", fontsize=14)
     plt.suptitle(
-        rf"$(p_0/\rho_0 = {p0 / rho0:.2f}, Q = 10^3, R_b = 10^4,  1/\mathcal{{E}}^2 = 1/100)$",
+        rf"$(p_0/\rho_0 = {p0 / rho0:.2f}, Q = 10^3, R_b = 10^4,  e/\mathcal{{E}} = 10)$",
         fontsize=12,
         y=0.87,
     )
@@ -130,7 +130,7 @@ ani = FuncAnimation(fig, update, frames=num_frames, interval=1000, blit=False)
 
 # Save the animation as a video
 writer = FFMpegWriter(fps=10, metadata=dict(artist='Me'), bitrate=1800)
-ani.save("0.25ChargeMassless_E=10.mp4", writer=writer)
+ani.save("ChargeMasslessRho.mp4", writer=writer)
 
 # Display animation
 plt.show()
