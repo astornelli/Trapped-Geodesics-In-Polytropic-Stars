@@ -13,7 +13,7 @@ ni, nf, nspc = 1.01, 5, 30
 li, lf, lspc = 0.01, 5, 30
 gi, gf, gspc = 0.001, 5, 30
 
-# Eq. 43 in paper
+# Eq. 33 in paper
 def phiprime(n, l, g, rho0, p0):
     fact1 = 4*np.pi*rho0*Rb
     fact12 = (l+1)/(l+3)
@@ -26,7 +26,7 @@ def phiprime(n, l, g, rho0, p0):
       -fact2*Rb*pow(X,2*n-2)/(n-1)+fact21*Rb*pow(X,2))
     return [nume/denom, denom]
 
-# Eq. 44 in paper
+# Eq. 34 in paper
 def Fprime(n, l, g, rho0, p0):
     phip = phiprime(n, l, g, rho0, p0)
     num = np.exp(cumulative_trapezoid(phip[0]*Rb, X, initial=0))
@@ -93,12 +93,15 @@ for jdx, eE in enumerate(E_vals):
                     if p0 / rho0 > 1 / g:
                         continue
                     phip = phiprime(n, l, g, rho0, p0)
-                    Fpri = Fprime(n, l, g, rho0, p0)
                     if len(np.where(phip[1]<=0)[0])!=0:
                         continue
+                    Fpri = Fprime(n, l, g, rho0, p0)
                     F = cumulative_trapezoid(Fpri*Rb, X, initial=0)
                     phi = cumulative_trapezoid(phip[0], X, initial=0)
                     Chargemassive = (1 + eE*F)*np.exp(-2*phi)*pow(E,2)*((1+eE*F)*(1-X*Rb*phip[0])+eE*Fpri*X*Rb)
+                    # Preliminary jump condition applied in charged massless does not work
+                    # there are no jumps in phi or F
+                    # we check for large values in derivatives and discard them! these large values 
                     CM_deriv=np.gradient(Chargemassive, X)
                     crossing = np.where(np.diff(np.sign(abs(CM_deriv) - 1e10)))[0]
                     # Cutoff for discontinuities
