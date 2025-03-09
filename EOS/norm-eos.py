@@ -1,8 +1,9 @@
-# Plots normalized density and pressure (polytropic EOS) for a given l and gamma
+# Plots normalized density, pressure (polytropic EOS) and charge for given n, l, Gamma
 import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
 
+n = 3
 l = 2
 g = 2.5
 
@@ -14,6 +15,9 @@ def Rhon(X):     # normalized density
 
 def Presn(X):    # normalized pressure
     return (1-X**l)**g
+
+def Qn(X):       # normalized charge
+    return X**n
 
 X = np.linspace(Xi, Xf, num=Xspc)
 rho_vals = np.array([1.00e-9])#, 2.50e-9, 5.00e-9])
@@ -39,17 +43,19 @@ plt.rcParams['legend.frameon'] = False
 plt.rcParams['legend.handletextpad'] = 0.3
 
 
-ax.plot(X, Rhon(X), lw=2, ls='-',color='k',label=r'$\rho/\rho_0$')
-ax.plot(X, Presn(X), lw=2, ls='--',color='k',label=r'$p/p_0$')
-ax.set_xlabel(r"$\chi$", fontsize = 18)
+ax.plot(X, Rhon(X), lw=2, ls='-',label=r'$\rho/\rho_0$')
+ax.plot(X, Presn(X), lw=2, ls='--',label=r'$p/p_0$')
+ax.plot(X, Qn(X), lw=2, ls=':',label=r'$q/Q$')
+ax.set_xlabel(r"$\chi$", fontsize = 15)
 ax.tick_params(axis='x', labelsize=15)
 ax.tick_params(axis='y', labelsize=15)
 ax.grid()
-ax.legend()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.legend(loc='best')
 ax.minorticks_on()
 ax.set_aspect('auto')
 ax.tick_params(which='both', direction='in', top=True, bottom=True, left=True, right=True)
-ax.set_title(rf'$l = {l:.1f}, \Gamma = {g:.2f}$', fontsize=15, ha='center', va='center')#, bbox=dict(facecolor='none', edgecolor='black', boxstyle='round'))
     
 fig.tight_layout(rect=[0.06, 0.06, 1, 0.96])
 fig.savefig("PolyPresRho.pdf", bbox_inches='tight')
