@@ -34,7 +34,7 @@ def Fprime(n, l, g, rho0, p0):
 
 # Grid of rho and p values
 rho_vals = np.array([8.1e-10, 1.1e-9, 2.1e-9])  # 4 values for rho
-E_vals = np.array([10])
+E_vals = np.array([10])    # ratio of charge to energy
 p_ratio = 0.25
 
 # Define X and ranges for the nested loops
@@ -72,9 +72,9 @@ plt.rcParams['legend.handletextpad'] = 0.3
 # Loop through rho and pres combinations
 for jdx, eE in enumerate(E_vals):
     for idx, rho0 in enumerate(rho_vals):
-        SCax = SCaxes[idx]  # Access corresponding subplot
+        SCax = SCaxes[idx]    # Access corresponding subplot
         LHSax = LHSaxes[idx]  # Access corresponding subplot
-        p0 = p_ratio * rho0  # Calculate pres
+        p0 = p_ratio * rho0   # Calculate pres    
 
         if idx == 0:  # Only the first column gets the y-axis label
             LHSax.set_ylabel(r'f$(n, l, \Gamma, \chi)$', fontsize=18)
@@ -88,12 +88,17 @@ for jdx, eE in enumerate(E_vals):
                     if p0 / rho0 > 1 / g:
                         continue
                     phip = phiprime(n, l, g, rho0, p0)
+                    # avoiding unphysical values in the square root (in the denominator of Fprime)
                     if len(np.where(phip[1]<=0)[0])!=0:
                         continue
                     F = cumulative_trapezoid(Fprime(n, l, g, rho0, p0)*Rb, X, initial=0)
+                    # lhs of eqn. 43
                     Chargemassless = (1 - X*Rb*phip[0])/(X*Rb*(phip[0]*F-Fprime(n, l, g, rho0, p0))-F)
+                    # Cutoff for discontinuities, the function phiprime should not have discontinuities, sharp jumps, etc.
+                    # Jump discontinuities -- checking if the left and right derivatives of the signs of the lhs match
+                    # Chargemassless -1 ensures 0 values are treated as negative numbers
+                    # if left and right derivatives do not match, there is jump discontinuity, and crossing is > 1, and gets discarded!
                     crossing = np.where(np.diff(np.sign(Chargemassless - 1)))[0]
-                    # Cutoff for discontinuities
                     if len(crossing) > 1:
                         continue
                     if np.any((Chargemassless[0] < eE) and (np.max(Chargemassless) >= eE)):
