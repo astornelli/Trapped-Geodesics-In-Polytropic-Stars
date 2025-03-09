@@ -56,6 +56,8 @@ ax.legend(loc='best')
 ax.minorticks_on()
 ax.set_aspect('auto')
 ax.tick_params(which='both', direction='in', top=True, bottom=True, left=True, right=True)
+x_ticks = ax.xaxis.get_major_ticks()
+x_ticks[0].label1.set_visible(False) ## set first x tick label invisible
     
 fig.tight_layout(rect=[0.06, 0.06, 1, 0.96])
 fig.savefig("PolyPresRho.pdf", bbox_inches='tight')
