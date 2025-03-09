@@ -40,7 +40,7 @@ lvals = np.linspace(li, lf, num=lspc)
 gvals = np.linspace(gi, gf, num=gspc)
 
 # Rb Range
-Q_min, Q_max = 500, 5000
+Q_min, Q_max = 5, 5000
 Q_vals = np.linspace(Q_min, Q_max, 100)
 
 # Set up the figure and axis
