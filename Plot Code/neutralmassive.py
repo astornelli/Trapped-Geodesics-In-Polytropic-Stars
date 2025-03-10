@@ -84,6 +84,10 @@ for idx, rho0 in enumerate(rho_vals):
                 y = phiprime(n, l, g, rho0, p0)
                 y_integral = cumulative_trapezoid(y, X, initial=0)
                 y_combined = np.exp(-2 * y_integral) * (1 - X * Rb * y)
+                NM_deriv=np.gradient(y_combined, X)
+                crossing = np.where(np.diff(np.sign(y_combined)))[0]
+                if len(crossing) > 1 or np.max(abs(NM_deriv))>1e2:   # removing sharp jumps 
+                    continue
                 if np.any((y_combined[0] < one_over_esq) and (np.max(y_combined) >= one_over_esq)):
                     if np.any(y_combined[-1] < one_over_esq):
                         nus.append(n)
